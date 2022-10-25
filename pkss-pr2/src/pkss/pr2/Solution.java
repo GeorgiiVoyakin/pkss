@@ -49,8 +49,8 @@ public class Solution {
         double side4 = getDistance(coords[6], coords[7], coords[8], coords[9]);
         double side5 = getDistance(coords[8], coords[9], coords[10], coords[11]);
         double side6 = getDistance(coords[10], coords[11], coords[12], coords[13]);
-        double side7 = getDistance(coords[13], coords[14], coords[15], coords[16]);
-        double side8 = getDistance(coords[10], coords[11], coords[0], coords[1]);
-        return side1 + side2 + side3 + side4 + side5 + side6;
+        double side7 = getDistance(coords[12], coords[13], coords[14], coords[15]);
+        double side8 = getDistance(coords[14], coords[15], coords[0], coords[1]);
+        return side1 + side2 + side3 + side4 + side5 + side6 + side7 + side8;
     }
 }
