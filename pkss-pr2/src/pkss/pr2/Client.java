@@ -34,47 +34,76 @@ public class Client extends Thread {
                 }
                 switch (choice) {
                     case 5 -> {
-                        toServer.println(choice);
                         System.out.println("Client> Введите 2 числа:");
-                        double S = scanner.nextDouble();
-                        double T = scanner.nextDouble();
+                        double S;
+                        double T;
+                        try {
+                            S = scanner.nextDouble();
+                            T = scanner.nextDouble();
+                        } catch (InputMismatchException e) {
+                            System.err.println("Некорректный ввод!");
+                            continue;
+                        }
+                        toServer.println(choice);
                         toServer.println(S);
                         toServer.println(T);
                     }
                     case 8 -> {
-                        toServer.println(choice);
                         System.out.println("Client> Введите координаты шестиугольника:");
                         StringBuilder stringBuilder = new StringBuilder();
-                        for (int i = 0; i < 12; i++) {
-                            stringBuilder.append(scanner.nextInt());
-                            stringBuilder.append(" ");
+                        try {
+                            for (int i = 0; i < 12; i++) {
+                                stringBuilder.append(scanner.nextInt());
+                                stringBuilder.append(" ");
+                            }
+                        } catch (InputMismatchException e) {
+                            System.err.println("Некорректный ввод!");
+                            continue;
                         }
+                        toServer.println(choice);
                         toServer.println(stringBuilder);
                     }
                     case 11 -> {
-                        toServer.println(choice);
                         System.out.println("Client> Введите 3 числа:");
                         StringBuilder stringBuilder = new StringBuilder();
-                        stringBuilder.append(scanner.nextInt());
-                        stringBuilder.append(" ");
-                        stringBuilder.append(scanner.nextInt());
-                        stringBuilder.append(" ");
-                        stringBuilder.append(scanner.nextInt());
+                        try {
+                            stringBuilder.append(scanner.nextInt());
+                            stringBuilder.append(" ");
+                            stringBuilder.append(scanner.nextInt());
+                            stringBuilder.append(" ");
+                            stringBuilder.append(scanner.nextInt());
+                        } catch (InputMismatchException e) {
+                            System.err.println("Некорректный ввод!");
+                            continue;
+                        }
+                        toServer.println(choice);
                         toServer.println(stringBuilder);
                     }
                     case 14 -> {
-                        toServer.println(choice);
                         System.out.println("Client> Введите 1 число:");
-                        toServer.println(scanner.nextDouble());
+                        double number;
+                        try {
+                            number = scanner.nextDouble();
+                        } catch (InputMismatchException e) {
+                            System.err.println("Некорректный ввод!");
+                            continue;
+                        }
+                        toServer.println(choice);
+                        toServer.println(number);
                     }
                     case 17 -> {
-                        toServer.println(choice);
                         System.out.println("Client> Введите координаты восьмиугольника:");
                         StringBuilder stringBuilder = new StringBuilder();
-                        for (int i = 0; i < 16; i++) {
-                            stringBuilder.append(scanner.nextInt());
-                            stringBuilder.append(" ");
+                        try {
+                            for (int i = 0; i < 16; i++) {
+                                stringBuilder.append(scanner.nextInt());
+                                stringBuilder.append(" ");
+                            }
+                        } catch (InputMismatchException e) {
+                            System.err.println("Некорректный ввод!");
+                            continue;
                         }
+                        toServer.println(choice);
                         toServer.println(stringBuilder);
                     }
                     default -> {
