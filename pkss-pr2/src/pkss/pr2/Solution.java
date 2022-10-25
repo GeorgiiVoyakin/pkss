@@ -3,15 +3,15 @@ package pkss.pr2;
 import java.util.stream.Stream;
 
 public class Solution {
-    private double G(double A, double B) {
+    private static double G(double A, double B) {
         return (2 * A + B * B) / (A * B * 2 + B * 5);
     }
 
-    public double task5(double S, double T) {
+    public static double task5(double S, double T) {
         return G(1, Math.sin(S)) + 2 * G(T * S, 24) - G(5, -S);
     }
 
-    public double task8(int[] coords) {
+    public static double task8(int[] coords) {
         if (coords.length != 12) {
             return -1;
         }
@@ -24,22 +24,21 @@ public class Solution {
         return side1 + side2 + side3 + side4 + side5 + side6;
     }
 
-    private double getDistance(double x1, double y1, double x2, double y2) {
+    private static double getDistance(double x1, double y1, double x2, double y2) {
         return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
     }
 
-    public int task11(int a, int b, int c) {
+    public static int task11(int a, int b, int c) {
         return Stream.of(a, b, c).toList().stream().max(Integer::compare).orElseThrow();
     }
 
-    public double task14(double A) {
-        //Z=(X1+Y1)/(X1*Y1)
-        // X2- 4*X-1=0
-        double x = (4 + Math.sqrt(4*4 - 4*(-1))) / (2*4);
-        return x;
+    public static double task14(double A) {
+        double x = (4 + Math.sqrt(-4 * -4 - 4 * -1)) / 2;
+        double y = (-A + Math.sqrt(A * A - 4 * 2 * -(A * A))) / (2 * 2);
+        return (x + y) / (x * y);
     }
 
-    public double task17(int[] coords) {
+    public static double task17(int[] coords) {
         if (coords.length != 16) {
             return -1;
         }
