@@ -31,7 +31,7 @@ public class Server extends Thread {
     }
 
     class ClientHandler extends Thread {
-        private Socket socket;
+        private final Socket socket;
 
         private BufferedReader fromClient;
         private PrintStream toClient;
@@ -39,9 +39,7 @@ public class Server extends Thread {
         ClientHandler(Socket socket) {
             this.socket = socket;
             try {
-                fromClient = new BufferedReader(new
-                    InputStreamReader(
-                    socket.getInputStream()));
+                fromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             } finally {
@@ -53,13 +51,23 @@ public class Server extends Thread {
                     System.err.println(e.getMessage());
                 }
             }
+            try {
+                toClient = new PrintStream(socket.getOutputStream());
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            } finally {
+                if (toClient != null) {
+                    toClient.close();
+                }
+            }
         }
 
         @Override
         public void run() {
             try {
                 String message = fromClient.readLine();
-
+                System.out.println(message);
+                toClient.println("Сообщение успешно получено");
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }
