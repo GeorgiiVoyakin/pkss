@@ -8,68 +8,57 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server extends Thread {
-    private ServerSocket serverSocket;
+    private final ServerSocket serverSocket;
     private final int port = 1001;
 
-    public Server() {
-        try {
-            serverSocket = new ServerSocket(port);
-        } catch (IOException e) {
-            System.err.println("Не удалось создать серверный сокет с портом " + port + " : " + e.getMessage());
-        }
+    public Server() throws IOException {
+        serverSocket = new ServerSocket(port);
     }
 
     @Override
+    @SuppressWarnings("InfiniteLoopStatement")
     public void run() {
+        System.out.println("Server> Сервер запущен на порту: " + port);
         try {
             while (true) {
                 new ClientHandler(serverSocket.accept()).start();
             }
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            System.err.println("Server> Ошибка во время ожидания соединения с клиентом: " + e.getMessage());
         }
     }
 
-    class ClientHandler extends Thread {
-        private final Socket socket;
-
+    private static class ClientHandler extends Thread {
         private BufferedReader fromClient;
         private PrintStream toClient;
 
         ClientHandler(Socket socket) {
-            this.socket = socket;
             try {
                 fromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             } catch (IOException e) {
-                System.err.println(e.getMessage());
-            } finally {
-                try {
-                    if (fromClient != null) {
-                        fromClient.close();
-                    }
-                } catch (IOException e) {
-                    System.err.println(e.getMessage());
-                }
+                System.err.println("Server> Не удалось создать поток чтения от клиента" + e.getMessage());
             }
             try {
                 toClient = new PrintStream(socket.getOutputStream());
             } catch (IOException e) {
-                System.err.println(e.getMessage());
-            } finally {
-                if (toClient != null) {
-                    toClient.close();
-                }
+                System.err.println("Server> Не удалось создать поток записи к клиенту: " + e.getMessage());
             }
+            System.out.println("Server> Установлено соединение с клиентом: " + socket);
         }
 
         @Override
+        @SuppressWarnings("InfiniteLoopStatement")
         public void run() {
             try {
-                String message = fromClient.readLine();
-                System.out.println(message);
-                toClient.println("Сообщение успешно получено");
+                while (true) {
+                    String message = fromClient.readLine();
+                    if (message != null) {
+                        System.out.println("Server> Получено сообщение от клиента: " + message);
+                        toClient.println("Сообщение успешно получено");
+                    }
+                }
             } catch (IOException e) {
-                System.err.println(e.getMessage());
+                System.err.println("Server> Не удалось получить сообщение от клиента: " + e.getMessage());
             }
         }
     }
