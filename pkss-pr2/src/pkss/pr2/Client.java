@@ -11,10 +11,9 @@ public class Client extends Thread {
     private final PrintStream toServer;
 
     public Client() throws IOException {
-        try (Socket socket = new Socket("localhost", 1001)) {
-            fromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            toServer = new PrintStream(socket.getOutputStream());
-        }
+        Socket socket = new Socket("localhost", 1001);
+        fromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        toServer = new PrintStream(socket.getOutputStream());
     }
 
     @Override
